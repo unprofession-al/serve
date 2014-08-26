@@ -3,10 +3,13 @@ package main
 import (
 	"log"
 	"net/http"
-	"os"
+
+	"github.com/sontags/env"
 )
 
-func Log(handler http.Handler, logging string) http.Handler {
+var port, logging string
+
+func Log(handler http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if logging != "" {
 			log.Printf("%s %s %s\n", r.RemoteAddr, r.Method, r.URL)
@@ -15,12 +18,13 @@ func Log(handler http.Handler, logging string) http.Handler {
 	})
 }
 
+func init() {
+	env.Var(&port, "PORT", "8989", "Port that is binded")
+	env.Var(&logging, "LOG", "", "If not empty, log output will be written to STDOUT")
+}
+
 func main() {
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = "8989"
-	}
-	logging := os.Getenv("LOG")
+	env.Parse("S")
 	log.Println("listening on port", port)
-	log.Fatal(http.ListenAndServe(":"+port, Log(http.FileServer(http.Dir(".")), logging)))
+	log.Fatal(http.ListenAndServe(":"+port, Log(http.FileServer(http.Dir(".")))))
 }
