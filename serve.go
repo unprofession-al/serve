@@ -7,7 +7,7 @@ import (
 	"github.com/sontags/env"
 )
 
-var port, logging string
+var port, logging, dir string
 
 func Log(handler http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -19,12 +19,13 @@ func Log(handler http.Handler) http.Handler {
 }
 
 func init() {
-	env.Var(&port, "PORT", "8989", "Port that is binded")
+	env.Var(&port, "PORT", "8989", "Port that should be binded")
 	env.Var(&logging, "LOG", "", "If not empty, log output will be written to STDOUT")
+	env.Var(&dir, "DIR", ".", "Directory that should be served")
 }
 
 func main() {
 	env.Parse("S")
-	log.Println("listening on port", port)
-	log.Fatal(http.ListenAndServe(":"+port, Log(http.FileServer(http.Dir(".")))))
+	log.Println("Listening on port", port)
+	log.Fatal(http.ListenAndServe(":"+port, Log(http.FileServer(http.Dir(dir)))))
 }
