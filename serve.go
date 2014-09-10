@@ -35,7 +35,7 @@ func init() {
 }
 
 func main() {
-	env.Parse("S")
+	env.Parse("S", false)
 
 	if user != unset && pass != unset && host != unset && interval != unset {
 		inter, err := strconv.Atoi(interval)
