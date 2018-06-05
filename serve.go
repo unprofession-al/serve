@@ -6,7 +6,7 @@ import (
 	"strconv"
 
 	"github.com/sontags/env"
-	"github.com/sontags/noip"
+	"github.com/unprofession-al/noip"
 )
 
 const (
@@ -40,8 +40,8 @@ func main() {
 	if user != unset && pass != unset && host != unset && interval != unset {
 		inter, err := strconv.Atoi(interval)
 		if err == nil {
-			cli := noip.New(user, pass, host)
-			cli.Run(inter)
+			cli := noip.New(user, pass, host, "", "sontags.serve/v1.0 daniel.menet")
+			cli.Run(inter, true)
 			log.Println("NO-IP is now managed...")
 		}
 	}
