@@ -13,7 +13,7 @@ const (
 	unset = "UNSET"
 )
 
-var port, logging, dir, user, pass, host, interval string
+var listener, logging, dir, user, pass, host, interval string
 
 func Log(handler http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -25,7 +25,7 @@ func Log(handler http.Handler) http.Handler {
 }
 
 func init() {
-	env.Var(&port, "PORT", "8989", "Port that should be binded")
+	env.Var(&listener, "LISTENER", "127.0.0.1:8989", "Listener that should be binded")
 	env.Var(&logging, "LOG", "", "If not empty, log output will be written to STDOUT")
 	env.Var(&dir, "DIR", ".", "Directory that should be served")
 	env.Var(&user, "NOIP_USER", unset, "User to access no-ip")
@@ -46,6 +46,6 @@ func main() {
 		}
 	}
 
-	log.Println("Listening on port", port)
-	log.Fatal(http.ListenAndServe(":"+port, Log(http.FileServer(http.Dir(dir)))))
+	log.Printf("Listening at http://%s\n", listener)
+	log.Fatal(http.ListenAndServe(listener, Log(http.FileServer(http.Dir(dir)))))
 }
