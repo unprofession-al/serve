@@ -48,6 +48,7 @@ func (m *InjectorMiddleware) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 					console.log('Connection closed');
                 }
                 conn.onmessage = function(evt) {
+                	conn.close();
                     location.reload(true);
                 }
             })();
