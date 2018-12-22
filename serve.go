@@ -41,17 +41,18 @@ func (m *InjectorMiddleware) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	for k, v := range rec.Header() {
 		w.Header()[k] = v
 	}
-	out := bytes.Replace(rec.Body.Bytes(), []byte("</head>"), []byte(`<script>
- (function() {
-				var conn = new WebSocket("ws://127.0.0.1:8989/ws");
-                conn.onclose = function(evt) {
-					console.log('Connection closed');
-                }
-                conn.onmessage = function(evt) {
-                	conn.close();
-                    location.reload(true);
-                }
-            })();
+	out := bytes.Replace(rec.Body.Bytes(), []byte("</head>"), []byte(`    <script>
+		(function() {
+			var conn = new WebSocket("ws://127.0.0.1:8989/ws");
+			conn.onclose = function(evt) {
+				console.log('Connection closed');
+			}
+			conn.onmessage = function(evt) {
+				console.log(evt);
+				conn.close();
+				location.reload(true);
+			}
+		})();
 	</script></head>`), -1)
 	w.Header().Set("Content-Length", strconv.Itoa(len(out)))
 	w.Write(out)
