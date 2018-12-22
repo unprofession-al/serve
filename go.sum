@@ -1,0 +1,8 @@
+github.com/gorilla/websocket v1.4.0 h1:WDFjx/TMzVgy9VdMMQi2K2Emtwi2QcUQsztZ/zLaH/Q=
+github.com/gorilla/websocket v1.4.0/go.mod h1:E7qHFY5m1UJ88s3WnNqhKjPHQ0heANvMoAMk2YaljkQ=
+github.com/radovskyb/watcher v1.0.2 h1:9L5TsZUbo1nKhQEQPtICVc+x9UZQ6VPdBepLHyGw/bQ=
+github.com/radovskyb/watcher v1.0.2/go.mod h1:78okwvY5wPdzcb1UYnip1pvrZNIVEIh/Cm+ZuvsUYIg=
+github.com/sontags/env v0.0.0-20140908192900-bda8d88f75a5 h1:8Yxb+SvYrMFMEXVq+xIFMboaOGd9J3S2YbmCpUK4ND8=
+github.com/sontags/env v0.0.0-20140908192900-bda8d88f75a5/go.mod h1:W3FKjL2EI0lmTbfUi9pEEsEOE+5aZXCF87UQQzc3l6g=
+github.com/unprofession-al/noip v0.0.0-20180605062019-79ae89f9864a h1:JkwLoVMsDBhl7Oo0NE19sWzmr7Jvp6R4KlXXXZQGXNk=
+github.com/unprofession-al/noip v0.0.0-20180605062019-79ae89f9864a/go.mod h1:1YJPtPKK59bCh6fkR+/0oamAyzfpf69zOILI1/A1puU=
