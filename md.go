@@ -17,8 +17,8 @@ func MarkdownHandler(res http.ResponseWriter, req *http.Request) {
 	res.Header().Set("Content-Type", "text/html; charset=utf-8")
 
 	filePath := req.URL.Path
-	filePath = strings.TrimLeft(filePath, "/render/")
-	filePath = strings.TrimRight(filePath, ".html")
+	filePath = strings.TrimPrefix(filePath, "/render/")
+	filePath = strings.TrimSuffix(filePath, ".html")
 	filePath = c.dir + "/" + filePath + ".md"
 
 	file, err := os.Open(filePath)
