@@ -66,8 +66,22 @@ var htmlScaffold = `<!doctype html>
 <head>
 	<meta charset="utf-8">
 	<title>{{ .Title }}</title>
+	<link href="https://fonts.googleapis.com/css?family=Merriweather&display=swap" rel="stylesheet">
+	<style>
+		html, body {
+			font-family: 'Merriweather', serif;
+			line-height: 1.6;
+		}
+		.container {
+			max-width: 900px;
+			padding: 40px;
+			margin: 0 auto;
+		}
+	</style>
 </head>
 <body>
+	<div class="container">
 	{{ .Body }}
+	</div>
 </body>
 </html>`
