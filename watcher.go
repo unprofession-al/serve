@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/gorilla/websocket"
@@ -14,17 +15,17 @@ import (
 
 var watchChan chan string
 
-type InjectorMiddleware struct {
-	handler http.Handler
-}
+type InjectorMiddleware struct{}
 
-func (m *InjectorMiddleware) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	rec := httptest.NewRecorder()
-	m.handler.ServeHTTP(rec, r)
-	for k, v := range rec.Header() {
-		w.Header()[k] = v
-	}
-	out := bytes.Replace(rec.Body.Bytes(), []byte("</head>"), []byte(`    <script>
+func (m *InjectorMiddleware) Wrap(next http.Handler) http.Handler {
+	fn := func(w http.ResponseWriter, r *http.Request) {
+		if !strings.HasPrefix(r.URL.Path, "/ws") {
+			rec := httptest.NewRecorder()
+			next.ServeHTTP(rec, r)
+			for k, v := range rec.Header() {
+				w.Header()[k] = v
+			}
+			out := bytes.Replace(rec.Body.Bytes(), []byte("</head>"), []byte(`    <script>
 		function sleep(ms) {
 			return new Promise(resolve => setTimeout(resolve, ms));
 		}
@@ -41,8 +42,14 @@ func (m *InjectorMiddleware) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			}
 		})();
 	</script></head>`), -1)
-	w.Header().Set("Content-Length", strconv.Itoa(len(out)))
-	w.Write(out)
+			w.Header().Set("Content-Length", strconv.Itoa(len(out)))
+			w.Write(out)
+		} else {
+			next.ServeHTTP(w, r)
+		}
+	}
+
+	return http.HandlerFunc(fn)
 }
 
 var upgrader = websocket.Upgrader{

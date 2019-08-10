@@ -4,6 +4,8 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/gorilla/mux"
+	"github.com/justinas/alice"
 	"github.com/spf13/pflag"
 	"github.com/unprofession-al/noip"
 )
@@ -27,7 +29,12 @@ func main() {
 
 	log.Printf("Listening at http://%s\n", c.listener)
 
-	http.Handle("/", logger(&InjectorMiddleware{http.FileServer(http.Dir(c.dir))}))
-	http.HandleFunc("/ws", serveWs)
-	log.Fatal(http.ListenAndServe(c.listener, nil))
+	r := mux.NewRouter().StrictSlash(true)
+	r.Path("/ws").HandlerFunc(serveWs)
+	r.PathPrefix("/render").HandlerFunc(MarkdownHandler)
+	r.PathPrefix("/").Handler(http.FileServer(http.Dir(c.dir)))
+	r.Path("/ws").HandlerFunc(serveWs)
+	in := InjectorMiddleware{}
+	chain := alice.New(logger, in.Wrap).Then(r)
+	log.Fatal(http.ListenAndServe(c.listener, chain))
 }
