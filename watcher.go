@@ -6,8 +6,10 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"strconv"
+	"time"
 
 	"github.com/gorilla/websocket"
+	"github.com/radovskyb/watcher"
 )
 
 var watchChan chan string
@@ -68,6 +70,35 @@ func serveWs(w http.ResponseWriter, r *http.Request) {
 				return
 			}
 
+		}
+	}()
+}
+
+func watchFiles(dir string) {
+	watchChan = make(chan string)
+	w := watcher.New()
+
+	go func() {
+		for {
+			select {
+			case event := <-w.Event:
+				watchChan <- event.String()
+				// fmt.Println(event) // Print the event's info.
+			case err := <-w.Error:
+				log.Fatal(err)
+			case <-w.Closed:
+				return
+			}
+		}
+	}()
+
+	if err := w.AddRecursive(dir); err != nil {
+		log.Fatalln(err)
+	}
+
+	go func() {
+		if err := w.Start(time.Millisecond * 100); err != nil {
+			log.Fatalln(err)
 		}
 	}()
 }
