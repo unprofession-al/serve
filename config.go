@@ -8,7 +8,7 @@ type config struct {
 	listener string
 	logging  bool
 	dir      string
-	watch    bool
+	noWatch  bool
 	noip     noipConfig
 }
 
@@ -29,5 +29,5 @@ func init() {
 	pflag.StringVar(&c.noip.pass, "noip.pass", "", "Password to access no-ip")
 	pflag.StringVar(&c.noip.host, "noip.host", "", "Host to update via no-ip")
 	pflag.IntVar(&c.noip.interval, "noip.interval", 30, "Interval to update no-ip")
-	pflag.BoolVarP(&c.watch, "watch", "w", false, "Watch and refresh")
+	pflag.BoolVar(&c.noWatch, "nowatch", false, "Disable watch and refresh")
 }

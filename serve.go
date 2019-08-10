@@ -23,7 +23,7 @@ func main() {
 		log.Println("NO-IP is now managed...")
 	}
 
-	if c.watch {
+	if !c.noWatch {
 		watchFiles(c.dir)
 	}
 
