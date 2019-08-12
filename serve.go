@@ -31,7 +31,6 @@ func main() {
 
 	r := mux.NewRouter().StrictSlash(true)
 	r.Path("/ws").HandlerFunc(serveWs)
-	r.PathPrefix("/render").HandlerFunc(MarkdownHandler)
 	r.PathPrefix("/").Handler(http.FileServer(http.Dir(c.dir)))
 	r.Path("/ws").HandlerFunc(serveWs)
 	in := InjectorMiddleware{}

@@ -7,8 +7,12 @@ import (
 	"net/http/httptest"
 	"strconv"
 	"strings"
+	"text/template"
 	"time"
 
+	"github.com/gomarkdown/markdown"
+	"github.com/gomarkdown/markdown/html"
+	"github.com/gomarkdown/markdown/parser"
 	"github.com/gorilla/websocket"
 	"github.com/radovskyb/watcher"
 )
@@ -22,10 +26,39 @@ func (m *InjectorMiddleware) Wrap(next http.Handler) http.Handler {
 		if !strings.HasPrefix(r.URL.Path, "/ws") {
 			rec := httptest.NewRecorder()
 			next.ServeHTTP(rec, r)
+
 			for k, v := range rec.Header() {
 				w.Header()[k] = v
 			}
-			out := bytes.Replace(rec.Body.Bytes(), []byte("</head>"), []byte(`    <script>
+			out := rec.Body.Bytes()
+
+			if strings.HasSuffix(strings.ToLower(r.RequestURI), ".md") {
+				extensions := parser.CommonExtensions | parser.AutoHeadingIDs
+				parser := parser.NewWithExtensions(extensions)
+
+				htmlFlags := html.CommonFlags | html.HrefTargetBlank
+				opts := html.RendererOptions{Flags: htmlFlags}
+				renderer := html.NewRenderer(opts)
+
+				data := htmlData{
+					Body:  string(markdown.ToHTML(out, parser, renderer)),
+					Title: r.URL.Path,
+				}
+
+				tmpl := template.Must(template.New("page").Parse(htmlScaffold))
+				var rendered bytes.Buffer
+				err := tmpl.Execute(&rendered, data)
+				if err != nil {
+					w.WriteHeader(http.StatusInternalServerError)
+					w.Write([]byte("template cound not be rendered"))
+					return
+				}
+
+				w.Header().Set("Content-Type", "text/html; charset=utf-8")
+				out = rendered.Bytes()
+			}
+
+			out = bytes.Replace(out, []byte("</head>"), []byte(`    <script>
 		function sleep(ms) {
 			return new Promise(resolve => setTimeout(resolve, ms));
 		}
