@@ -27,15 +27,23 @@ var htmlScaffold = `<!doctype html>
 			margin: 0 auto;
 		}
 
-		code, pre {
+		code {
 			background-color: #c5e8e2;
-			padding-left: 4px;
-			padding-right: 4px;
 			border-radius: 4px;
+			padding-right: 4px;
+			padding-left: 4px;
 		}
 
 		pre {
-			padding: 5px;
+			background-color: #c5e8e2;
+			border-radius: 4px;
+			padding-left: 6px;
+			padding-right: 6px;
+		}
+
+		 pre>code {
+			padding-left: 0;
+			padding-right: 0;
 		}
 
 		#drawler {
