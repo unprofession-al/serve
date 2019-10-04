@@ -27,6 +27,43 @@ var htmlScaffold = `<!doctype html>
 			margin: 0 auto;
 		}
 
+		table {
+		    font-size: 0.8em;
+		    margin: 25px auto;
+		    border-collapse: collapse;
+		    border: 1px solid #eee;
+		    border-bottom: 2px solid #c5e8e2;
+		    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1), 0px 10px 20px rgba(0, 0, 0, 0.05), 0px 20px 20px rgba(0, 0, 0, 0.05), 0px 30px 20px rgba(0, 0, 0, 0.05);
+		}
+
+		table tr:hover {
+		    background: #f4f4f4;
+		}
+
+		table th, table td {
+		    border: 1px solid #eee;
+		    padding: 10px;
+		    border-collapse: collapse;
+		}
+
+		table th {
+			background-color: #c5e8e2;
+		    text-transform: uppercase;
+		}
+
+		table td {
+		    text-align: left;
+		}
+
+		table th.last {
+		    border-right: none;
+		}
+
+		a {
+			color: #50a395;
+			text-decoration: none;
+		}
+
 		code {
 			background-color: #c5e8e2;
 			border-radius: 4px;
