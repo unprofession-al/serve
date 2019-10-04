@@ -23,7 +23,7 @@ var htmlScaffold = `<!doctype html>
 
 		.container {
 			max-width: 900px;
-			padding: 40px;
+			padding: 60px;
 			margin: 0 auto;
 		}
 
@@ -47,11 +47,11 @@ var htmlScaffold = `<!doctype html>
 		}
 
 		#drawler {
-			background-image: linear-gradient(to right, #DDD, #FFF);
+			background-image: linear-gradient(to right, rgba(0,0,0,0.2), rgba(0,0,0,0));
 			position: fixed;
 			height: 100%;
 			z-index: 20;
-			width: 50px;
+			width: 30px;
 			transition: background-color .07s ease;
 			font-size: 18px;
 		}
