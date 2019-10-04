@@ -76,6 +76,17 @@ var htmlScaffold = `<!doctype html>
 			border-radius: 4px;
 			padding-left: 6px;
 			padding-right: 6px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            white-space: -moz-pre-wrap;
+            white-space: -pre-wrap;
+            white-space: -o-pre-wrap;
+            word-wrap: break-word;
+		}
+
+		img {
+			width: 100%;
+		    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1), 0px 10px 20px rgba(0, 0, 0, 0.05), 0px 20px 20px rgba(0, 0, 0, 0.05), 0px 30px 20px rgba(0, 0, 0, 0.05);
 		}
 
 		 pre>code {
@@ -119,6 +130,11 @@ var htmlScaffold = `<!doctype html>
 
 		#drawler:hover>.drawler_content {
 			left: 0px;
+			width: 300px;
+		}
+
+		#drawler:not(:hover)>.drawler_content {
+			width: 0px;
 		}
 
 		#drawler>.drawler_content>.toc>nav>ul {
