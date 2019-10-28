@@ -9,3 +9,5 @@ require (
 	github.com/spf13/pflag v1.0.3
 	github.com/unprofession-al/noip v0.0.0-20180605062019-79ae89f9864a
 )
+
+go 1.13

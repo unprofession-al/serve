@@ -141,6 +141,10 @@ var htmlScaffold = `<!doctype html>
 			list-style-type: none;
 			padding-left: 0;
 		}
+
+		#drawler>.drawler_content>.toc>nav>ul>li {
+			padding-bottom: 10px;
+		}
 	</style>
 </head>
 <body>
