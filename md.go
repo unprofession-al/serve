@@ -23,8 +23,45 @@ var htmlScaffold = `<!doctype html>
 
 		.container {
 			max-width: 900px;
-			padding: 40px;
+			padding: 60px;
 			margin: 0 auto;
+		}
+
+		table {
+		    font-size: 0.8em;
+		    margin: 25px auto;
+		    border-collapse: collapse;
+		    border: 1px solid #eee;
+		    border-bottom: 2px solid #c5e8e2;
+		    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1), 0px 10px 20px rgba(0, 0, 0, 0.05), 0px 20px 20px rgba(0, 0, 0, 0.05), 0px 30px 20px rgba(0, 0, 0, 0.05);
+		}
+
+		table tr:hover {
+		    background: #f4f4f4;
+		}
+
+		table th, table td {
+		    border: 1px solid #eee;
+		    padding: 10px;
+		    border-collapse: collapse;
+		}
+
+		table th {
+			background-color: #c5e8e2;
+		    text-transform: uppercase;
+		}
+
+		table td {
+		    text-align: left;
+		}
+
+		table th.last {
+		    border-right: none;
+		}
+
+		a {
+			color: #50a395;
+			text-decoration: none;
 		}
 
 		code {
@@ -39,6 +76,17 @@ var htmlScaffold = `<!doctype html>
 			border-radius: 4px;
 			padding-left: 6px;
 			padding-right: 6px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            white-space: -moz-pre-wrap;
+            white-space: -pre-wrap;
+            white-space: -o-pre-wrap;
+            word-wrap: break-word;
+		}
+
+		img {
+			width: 100%;
+		    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1), 0px 10px 20px rgba(0, 0, 0, 0.05), 0px 20px 20px rgba(0, 0, 0, 0.05), 0px 30px 20px rgba(0, 0, 0, 0.05);
 		}
 
 		 pre>code {
@@ -47,11 +95,11 @@ var htmlScaffold = `<!doctype html>
 		}
 
 		#drawler {
-			background-image: linear-gradient(to right, #DDD, #FFF);
+			background-image: linear-gradient(to right, rgba(0,0,0,0.2), rgba(0,0,0,0));
 			position: fixed;
 			height: 100%;
 			z-index: 20;
-			width: 50px;
+			width: 30px;
 			transition: background-color .07s ease;
 			font-size: 18px;
 		}
@@ -82,11 +130,20 @@ var htmlScaffold = `<!doctype html>
 
 		#drawler:hover>.drawler_content {
 			left: 0px;
+			width: 300px;
+		}
+
+		#drawler:not(:hover)>.drawler_content {
+			width: 0px;
 		}
 
 		#drawler>.drawler_content>.toc>nav>ul {
 			list-style-type: none;
 			padding-left: 0;
+		}
+
+		#drawler>.drawler_content>.toc>nav>ul>li {
+			padding-bottom: 10px;
 		}
 	</style>
 </head>
